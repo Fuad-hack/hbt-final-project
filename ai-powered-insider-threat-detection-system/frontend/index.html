@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SentinelAI — AI-Powered Insider Threat Detection SOC Dashboard">
+  <title>SentinelAI — Insider Threat Detection</title>
+  <link rel="stylesheet" href="/static/index.css">
+</head>
+<body>
+
+  <!-- ─── HEADER ─── -->
+  <header class="header">
+    <div class="header-brand">
+      <div class="logo">S</div>
+      <h1>Sentinel<span>AI</span></h1>
+    </div>
+    <div class="status-bar">
+      <div class="pulse-dot"></div>
+      <span>LIVE &middot; <span id="user-count">247</span> USERS MONITORED</span>
+    </div>
+  </header>
+
+  <!-- ─── TAB NAV ─── -->
+  <nav class="tab-nav">
+    <button class="tab-btn active" data-tab="anomaly">Anomaly Table</button>
+    <button class="tab-btn" data-tab="user-detail">User Detail</button>
+    <button class="tab-btn" data-tab="graph">At-Risk Graph</button>
+    <button class="tab-btn" data-tab="how">How It Works</button>
+  </nav>
+
+  <!-- ─── MAIN CONTENT ─── -->
+  <main class="main-content">
+
+    <!-- TAB 1: ANOMALY TABLE -->
+    <section id="tab-anomaly" class="tab-panel active">
+      <div class="metrics-row">
+        <div class="metric-card red">
+          <div class="metric-label">Critical Threats</div>
+          <div class="metric-value" id="mc-critical">—</div>
+          <div class="metric-sub">DETECTED THIS CYCLE</div>
+        </div>
+        <div class="metric-card amber">
+          <div class="metric-label">Avg Anomaly Score</div>
+          <div class="metric-value" id="mc-avg">—</div>
+          <div class="metric-sub">ACROSS ALL USERS</div>
+        </div>
+        <div class="metric-card cyan">
+          <div class="metric-label">Red Team Flags</div>
+          <div class="metric-value" id="mc-redteam">—</div>
+          <div class="metric-sub">SIMULATED INSIDERS</div>
+        </div>
+        <div class="metric-card green">
+          <div class="metric-label">Active Models</div>
+          <div class="metric-value" id="mc-models">3</div>
+          <div class="metric-sub">IF / SVM / AE</div>
+        </div>
+      </div>
+      <div class="controls-bar">
+        <input type="text" class="search-input" id="search-input" placeholder="SEARCH USER ID, DEPARTMENT, TRIGGER...">
+        <select class="filter-select" id="risk-filter">
+          <option value="all">ALL RISK LEVELS</option>
+          <option value="critical">CRITICAL</option>
+          <option value="high">HIGH</option>
+          <option value="medium">MEDIUM</option>
+          <option value="low">LOW</option>
+        </select>
+        <select class="filter-select" id="flag-filter">
+          <option value="all">ALL FLAGS</option>
+          <option value="yes">RED TEAM ONLY</option>
+          <option value="no">CLEAN ONLY</option>
+        </select>
+      </div>
+      <div class="data-table-wrap">
+        <table class="data-table" id="anomaly-table">
+          <thead>
+            <tr>
+              <th>User ID</th>
+              <th>Department</th>
+              <th>Risk Level</th>
+              <th>Anomaly Score</th>
+              <th>Red Team</th>
+              <th>Top Trigger</th>
+              <th>Last Event</th>
+            </tr>
+          </thead>
+          <tbody id="anomaly-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TAB 2: USER DETAIL -->
+    <section id="tab-user-detail" class="tab-panel">
+      <div id="user-detail-placeholder" class="user-placeholder">
+        <div class="icon">⊘</div>
+        <div>SELECT A USER FROM THE ANOMALY TABLE TO INVESTIGATE</div>
+      </div>
+      <div id="user-detail-content" style="display:none;">
+        <div class="user-header" id="user-header"></div>
+        <div class="panels-grid">
+          <div class="panel">
+            <div class="panel-title">Behavioral Features</div>
+            <div id="behavioral-features"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">Frequency Features</div>
+            <div id="frequency-features"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-title">SHAP Importance</div>
+            <div id="shap-features"></div>
+          </div>
+        </div>
+        <div class="activity-section">
+          <div class="chart-card">
+            <div class="panel-title">7-Day Activity</div>
+            <div class="mini-bars" id="activity-bars"></div>
+          </div>
+          <div class="chart-card">
+            <div class="panel-title">Model Score Breakdown</div>
+            <div class="model-scores" id="model-scores"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: AT-RISK GRAPH -->
+    <section id="tab-graph" class="tab-panel">
+      <div class="metrics-row-3">
+        <div class="metric-card red">
+          <div class="metric-label">High-Risk Nodes</div>
+          <div class="metric-value" id="mc-highrisk">—</div>
+          <div class="metric-sub">ABOVE THRESHOLD</div>
+        </div>
+        <div class="metric-card amber">
+          <div class="metric-label">Flagged Connections</div>
+          <div class="metric-value" id="mc-connections">—</div>
+          <div class="metric-sub">SUSPICIOUS EDGES</div>
+        </div>
+        <div class="metric-card purple" style="--left-bar: var(--purple);">
+          <div class="metric-label">Clusters Detected</div>
+          <div class="metric-value" id="mc-clusters" style="color: var(--purple);">—</div>
+          <div class="metric-sub">BY COMMUNITY ANALYSIS</div>
+        </div>
+      </div>
+      <div class="graph-container">
+        <canvas id="graph-canvas"></canvas>
+        <div class="graph-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div> Critical</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--amber)"></div> High</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div> Medium</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div> Low</div>
+          <div style="border-top: 1px solid var(--border); margin: 8px 0;"></div>
+          <div class="legend-item"><div class="legend-line" style="background:var(--text-muted)"></div> Shared Resource</div>
+          <div class="legend-item"><div class="legend-line" style="background:var(--red)"></div> Flagged Link</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: HOW IT WORKS -->
+    <section id="tab-how" class="tab-panel">
+      <div id="accordion-container"></div>
+    </section>
+
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SentinelAI - AI-Powered Insider Threat Detection">
+  <title>SentinelAI - Login</title>
+  <link rel="stylesheet" href="/static/css/login.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+  <div class="login-container">
+    <!-- Background Effects -->
+    <div class="bg-grid"></div>
+    <div class="bg-glow"></div>
+    
+    <!-- Security Scan Lines -->
+    <div class="scan-lines">
+      <div class="scan-line"></div>
+      <div class="scan-line"></div>
+      <div class="scan-line"></div>
+    </div>
+    
+    <!-- Main Login Card -->
+    <div class="login-card">
+      <!-- Logo Section -->
+      <div class="logo-section">
+        <div class="logo-container">
+          <div class="logo-shield">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <div class="logo-pulse"></div>
+        </div>
+        <h1 class="brand-name">Sentinel<span class="highlight">AI</span></h1>
+        <p class="tagline">AI-Powered Insider Threat Detection</p>
+      </div>
+      
+      <!-- Status Bar -->
+      <div class="status-bar">
+        <div class="status-indicator">
+          <span class="status-dot online"></span>
+          <span class="status-text">SYSTEM ONLINE</span>
+        </div>
+        <div class="security-level">
+          <i class="fas fa-lock"></i>
+          <span>SECURE CONNECTION</span>
+        </div>
+      </div>
+      
+      <!-- Login Form -->
+      <form class="login-form" id="loginForm">
+        <div class="form-group">
+          <label for="username">
+            <i class="fas fa-user"></i>
+            Username
+          </label>
+          <div class="input-wrapper">
+            <input 
+              type="text" 
+              id="username" 
+              name="username" 
+              placeholder="Enter your username"
+              autocomplete="username"
+              required
+            >
+            <div class="input-focus-border"></div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="password">
+            <i class="fas fa-key"></i>
+            Password
+          </label>
+          <div class="input-wrapper">
+            <input 
+              type="password" 
+              id="password" 
+              name="password" 
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              required
+            >
+            <button type="button" class="toggle-password" id="togglePassword">
+              <i class="fas fa-eye"></i>
+            </button>
+            <div class="input-focus-border"></div>
+          </div>
+        </div>
+        
+        <div class="form-options">
+          <label class="checkbox-wrapper">
+            <input type="checkbox" id="rememberMe">
+            <span class="checkmark"></span>
+            <span class="checkbox-label">Remember this device</span>
+          </label>
+          <a href="#" class="forgot-password">Forgot password?</a>
+        </div>
+        
+        <button type="submit" class="login-btn" id="loginBtn">
+          <span class="btn-text">
+            <i class="fas fa-sign-in-alt"></i>
+            Access Dashboard
+          </span>
+          <span class="btn-loader" style="display: none;">
+            <i class="fas fa-circle-notch fa-spin"></i>
+            Authenticating...
+          </span>
+        </button>
+      </form>
+      
+      <!-- Error Message -->
+      <div class="error-message" id="errorMessage" style="display: none;">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span id="errorText"></span>
+      </div>
+      
+      <!-- Demo Accounts -->
+      <div class="demo-accounts">
+        <p class="demo-title">Demo Accounts</p>
+        <div class="demo-grid">
+          <div class="demo-card" data-user="admin" data-pass="admin123">
+            <i class="fas fa-user-shield"></i>
+            <span>Admin</span>
+          </div>
+          <div class="demo-card" data-user="analyst" data-pass="analyst123">
+            <i class="fas fa-search"></i>
+            <span>Analyst</span>
+          </div>
+          <div class="demo-card" data-user="soc" data-pass="soc123">
+            <i class="fas fa-desktop"></i>
+            <span>SOC</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Footer -->
+      <div class="login-footer">
+        <div class="security-badges">
+          <i class="fas fa-shield-alt" title="256-bit Encryption"></i>
+          <i class="fas fa-fingerprint" title="Multi-Factor Auth"></i>
+          <i class="fas fa-server" title="Secure Server"></i>
+        </div>
+        <p class="copyright">© 2024 SentinelAI Security Systems</p>
+      </div>
+    </div>
+    
+    <!-- System Info Panel -->
+    <div class="system-info">
+      <div class="info-card">
+        <div class="info-header">
+          <i class="fas fa-chart-line"></i>
+          <span>System Status</span>
+        </div>
+        <div class="info-stats">
+          <div class="stat">
+            <span class="stat-value" id="usersMonitored">247</span>
+            <span class="stat-label">Users Monitored</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value" id="threatsDetected">12</span>
+            <span class="stat-label">Threats Detected</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value" id="modelsActive">3</span>
+            <span class="stat-label">ML Models Active</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="activity-feed">
+        <div class="feed-header">
+          <i class="fas fa-rss"></i>
+          <span>Live Activity</span>
+        </div>
+        <div class="feed-items" id="activityFeed">
+          <!-- Activity items will be populated by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="/static/js/login.js"></script>
+</body>
+</html>
