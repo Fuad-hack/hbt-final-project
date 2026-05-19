@@ -1,8 +1,0 @@
-.git
-.github
-lib/
-__pycache__
-*.pyc
-*.pkl
-*.csv
-README.md
